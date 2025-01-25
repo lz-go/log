@@ -136,7 +136,9 @@ func (i *loggerImpl) prepareLogger() *zap.Logger {
 		cfg.Encoding = "json"
 	}
 
-	logger, _ := cfg.Build()
+	logger, _ := cfg.Build(
+		zap.AddCallerSkip(1),
+	)
 
 	if v, ok := i.ctx.Value(CorrelationIdContextKey).(string); ok {
 		i.fields = append(i.fields, zap.String(CorrelationIdLogKey, v))
