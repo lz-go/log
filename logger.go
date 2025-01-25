@@ -113,9 +113,6 @@ func (i *loggerImpl) Fatalf(format string, a ...any) {
 // Refer to the `README.md` document to understand which config will be used.
 func (i *loggerImpl) prepareLogger() *zap.Logger {
 	cfg := zap.NewProductionConfig()
-	if config.GetStringOr("app.env", "local") == "local" {
-		cfg = zap.NewDevelopmentConfig()
-	}
 
 	switch config.GetStringOr("log.level", "debug") {
 	case "debug":

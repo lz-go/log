@@ -11,17 +11,8 @@ import (
 
 func TestLogger(t *testing.T) {
 	t.Run("TestNewLogger", func(t *testing.T) {
-		t.Run("returns a new Logger instance in development mode", func(t *testing.T) {
+		t.Run("returns a new Logger instance", func(t *testing.T) {
 			config.Reset()
-			config.Set("app.env", "local")
-
-			logger := NewLogger()
-			assert.NotNil(t, logger)
-		})
-
-		t.Run("returns a new Logger instance in production mode", func(t *testing.T) {
-			config.Reset()
-			config.Set("app.env", "production")
 
 			logger := NewLogger()
 			assert.NotNil(t, logger)
@@ -29,7 +20,6 @@ func TestLogger(t *testing.T) {
 
 		t.Run("returns a new Logger instance with options", func(t *testing.T) {
 			config.Reset()
-			config.Set("app.env", "local")
 
 			ctx := context.WithValue(context.Background(), "cxid", "abcdef0123456789")
 
@@ -74,7 +64,7 @@ func TestLogger(t *testing.T) {
 			assert.NotNil(t, logger)
 		})
 
-		t.Run("returns a new debug level Logger instance with invalid level", func(t *testing.T) {
+		t.Run("returns a new Logger instance with debug level when the config is invalid", func(t *testing.T) {
 			config.Reset()
 			config.Set("log.level", "invalid")
 
@@ -98,7 +88,7 @@ func TestLogger(t *testing.T) {
 			assert.NotNil(t, logger)
 		})
 
-		t.Run("returns a new console encoding Logger instance with invalid encoding", func(t *testing.T) {
+		t.Run("returns a new Logger instance with json encoding when the config is invalid", func(t *testing.T) {
 			config.Reset()
 			config.Set("log.encoding", "invalid")
 
